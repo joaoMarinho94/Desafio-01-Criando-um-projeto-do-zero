@@ -1,4 +1,5 @@
-import { GetStaticProps } from 'next';
+import { GetStaticProps, NextPage } from 'next';
+import { MdOutlineCalendarToday, MdOutlinePerson } from 'react-icons/md';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -24,14 +25,38 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-export default function Home() {
-  return <h1>asd</h1>;
-}
+const Home: NextPage<PostPagination> = ({ next_page, results }) => {
+  return (
+    <div className={styles.container}>
+      <img src="/img/logo.svg" alt="logo" />
 
-export const getStaticProps = async () => {
+      <div className={styles.containerPosts}>
+        {results.map(post => (
+          <div key={post.uid}>
+            <h1>{post.data.title}</h1>
+            <p>{post.data.subtitle}</p>
+            <span>
+              <MdOutlineCalendarToday />
+              {post.first_publication_date}
+            </span>
+            <span>
+              <MdOutlinePerson />
+              {post.data.author}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <button type="button"> Carregar mais posts</button>
+    </div>
+  );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
   const postsResponse = await prismic.query('', { pageSize: 5 });
-  console.log('postsResponse: ', postsResponse);
 
   return { props: postsResponse };
 };
+
+export default Home;

@@ -1,1 +1,83 @@
-// TODO
+.container {
+  margin: 60px 0 60px 250px;
+
+  .logo {
+    width: 238.62px;
+    height: 25.63px;
+  }
+
+  button {
+    border: none;
+    background: transparent;
+
+    margin-top: 50px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+
+    text-align: justify;
+
+    color: #ff57b2;
+    cursor: pointer;
+  }
+
+  .containerPosts {
+    margin-top: 40px;
+
+    div + div {
+      margin-top: 38px;
+    }
+
+    div {
+      cursor: pointer;
+
+      h1 {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 34px;
+
+        text-align: justify;
+        letter-spacing: -0.5px;
+
+        color: #f8f8f8;
+      }
+
+      p {
+        margin-top: 8px;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+
+        text-align: justify;
+
+        color: #d7d7d7;
+      }
+
+      span + span {
+        margin-left: 20px;
+      }
+
+      span {
+        display: inline-block;
+        margin-top: 20px;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+
+        color: #bbbbbb;
+
+        svg {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
