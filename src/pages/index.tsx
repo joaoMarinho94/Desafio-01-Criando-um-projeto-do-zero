@@ -1,5 +1,6 @@
 import { GetStaticProps, NextPage } from 'next';
 import { MdOutlineCalendarToday, MdOutlinePerson } from 'react-icons/md';
+import Header from '../components/Header';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -27,28 +28,32 @@ interface HomeProps {
 
 const Home: NextPage<PostPagination> = ({ next_page, results }) => {
   return (
-    <div className={styles.container}>
-      <img src="/img/logo.svg" alt="logo" />
+    <>
+      <Header />
 
-      <div className={styles.containerPosts}>
-        {results.map(post => (
-          <div key={post.uid}>
-            <h1>{post.data.title}</h1>
-            <p>{post.data.subtitle}</p>
-            <span>
-              <MdOutlineCalendarToday />
-              {post.first_publication_date}
-            </span>
-            <span>
-              <MdOutlinePerson />
-              {post.data.author}
-            </span>
-          </div>
-        ))}
-      </div>
+      <main className={styles.container}>
+        <div className={styles.containerPosts}>
+          {results.map(post => (
+            <div key={post.uid}>
+              <h1>{post.data.title}</h1>
+              <p>{post.data.subtitle}</p>
+              <div className={commonStyles.moreInfos}>
+                <span>
+                  <MdOutlineCalendarToday />
+                  {post.first_publication_date}
+                </span>
+                <span>
+                  <MdOutlinePerson />
+                  {post.data.author}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
 
-      <button type="button"> Carregar mais posts</button>
-    </div>
+        <button type="button"> Carregar mais posts</button>
+      </main>
+    </>
   );
 };
 

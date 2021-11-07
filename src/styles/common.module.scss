@@ -1,1 +1,21 @@
-// TODO
+.moreInfos {
+  span + span {
+    margin-left: 20px;
+  }
+
+  span {
+    display: inline-block;
+    margin-top: 20px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+
+    color: #bbbbbb;
+
+    svg {
+      margin-right: 8px;
+    }
+  }
+}

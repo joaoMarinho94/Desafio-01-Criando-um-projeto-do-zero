@@ -1,10 +1,6 @@
 .container {
-  margin: 60px 0 60px 250px;
-
-  .logo {
-    width: 238.62px;
-    height: 25.63px;
-  }
+  max-width: 721px;
+  margin: 0px auto 60px auto;
 
   button {
     border: none;
@@ -24,8 +20,6 @@
   }
 
   .containerPosts {
-    margin-top: 40px;
-
     div + div {
       margin-top: 38px;
     }
@@ -57,26 +51,6 @@
         text-align: justify;
 
         color: #d7d7d7;
-      }
-
-      span + span {
-        margin-left: 20px;
-      }
-
-      span {
-        display: inline-block;
-        margin-top: 20px;
-        font-family: Inter;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-        line-height: 17px;
-
-        color: #bbbbbb;
-
-        svg {
-          margin-right: 8px;
-        }
       }
     }
   }
