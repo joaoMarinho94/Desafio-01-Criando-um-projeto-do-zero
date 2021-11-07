@@ -48,6 +48,13 @@ const Post: NextPage = () => {
           <span>
             <MdOutlineCalendarToday />
             15 Mar 2021
+            {/* {format(
+                    new Date(post.first_publication_date),
+                    'dd LLL yyyy',
+                    {
+                      locale: ptBR,
+                    }
+                  )} */}
           </span>
           <span>
             <MdOutlinePerson />

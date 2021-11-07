@@ -1,5 +1,10 @@
-import { GetStaticProps, NextPage } from 'next';
+import { useState } from 'react';
 import { MdOutlineCalendarToday, MdOutlinePerson } from 'react-icons/md';
+import { GetStaticProps, NextPage } from 'next';
+import Link from 'next/link';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+
 import Header from '../components/Header';
 
 import { getPrismicClient } from '../services/prismic';
@@ -18,7 +23,7 @@ interface Post {
 }
 
 interface PostPagination {
-  next_page: string;
+  next_page: string | null;
   results: Post[];
 }
 
@@ -26,21 +31,42 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-const Home: NextPage<PostPagination> = ({ next_page, results }) => {
+const Home: NextPage<HomeProps> = ({ postsPagination }) => {
+  const [posts, setPosts] = useState(postsPagination.results);
+  const [nextPage, setNextPage] = useState(postsPagination.next_page);
+
+  const handlePostPagination = async (): Promise<void> => {
+    const response = await fetch(postsPagination.next_page);
+    const { results, next_page }: PostPagination = await response.json();
+    setPosts([...posts, ...results]);
+    setNextPage(next_page);
+  };
+
   return (
     <>
       <Header />
 
       <main className={styles.container}>
         <div className={styles.containerPosts}>
-          {results.map(post => (
+          {posts.map(post => (
             <div key={post.uid}>
-              <h1>{post.data.title}</h1>
+              <Link href={`/post/${post.uid}`}>
+                <a>
+                  <h1>{post.data.title}</h1>
+                </a>
+              </Link>
+
               <p>{post.data.subtitle}</p>
               <div className={commonStyles.moreInfos}>
                 <span>
                   <MdOutlineCalendarToday />
-                  {post.first_publication_date}
+                  {format(
+                    new Date(post.first_publication_date),
+                    'dd LLL yyyy',
+                    {
+                      locale: ptBR,
+                    }
+                  )}
                 </span>
                 <span>
                   <MdOutlinePerson />
@@ -51,7 +77,11 @@ const Home: NextPage<PostPagination> = ({ next_page, results }) => {
           ))}
         </div>
 
-        <button type="button"> Carregar mais posts</button>
+        {nextPage && (
+          <button type="button" onClick={handlePostPagination}>
+            Carregar mais posts
+          </button>
+        )}
       </main>
     </>
   );
@@ -59,9 +89,11 @@ const Home: NextPage<PostPagination> = ({ next_page, results }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
-  const postsResponse = await prismic.query('', { pageSize: 5 });
+  const postsResponse: PostPagination = await prismic.query('', {
+    pageSize: 1,
+  });
 
-  return { props: postsResponse };
+  return { props: { postsPagination: postsResponse } };
 };
 
 export default Home;
