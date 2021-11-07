@@ -1,9 +1,15 @@
+import Link from 'next/link';
+
 import styles from './header.module.scss';
 
 const Header: React.FC = () => {
   return (
     <header className={styles.header}>
-      <img src="/img/logo.svg" alt="logo" />
+      <Link href="/">
+        <a>
+          <img src="/img/logo.svg" alt="logo" />
+        </a>
+      </Link>
     </header>
   );
 };
